@@ -15,18 +15,10 @@ public class Input {
 		
 		do {
 			System.out.println("Input address: ");
-			String address = in.nextLine();
+			String address = checkInputAddress(in.nextLine());
+
 			System.out.println("Input priority (1 -min, 2 -normal or 3 -max): ");
-			
-			String strPriority = in.nextLine();
-			int x = Integer.parseInt(strPriority);
-			Integer priority;
-			if (x >= 1 && x <= 3) {
-				priority = x;
-			} else {
-				priority = 1;
-				System.out.println("Invalid priority - priority will be set by default = 1");
-			}
+			Integer priority = checkInputPrior(in.nextLine());
 			
 			HashMap <String, Integer> addressAndPriority = new HashMap<>();
 			addressAndPriority.put(address, priority);
@@ -41,5 +33,28 @@ public class Input {
 		
 		in.close();
 		return addresses;
+	}
+	
+	private static String checkInputAddress(String str) {
+		if (str.equals("")) {
+			System.out.println("Nothing is entered! Changed by default = localhost");
+			str = "localhost";
+		}
+		return str;
+	}
+	
+	private static int checkInputPrior (String strPriority) {
+		try {
+			int x = Integer.parseInt(strPriority);
+			if (x >= 1 && x <= 3) {
+				return x;
+			} else {
+				System.out.println("Invalid priority - priority will be set by default = 1");
+				return 1;
+			}
+		} catch (NumberFormatException n_e) {
+			System.out.println("Invalid priority - priority will be set by default = 1");
+			 return 1;
+		}
 	}
 }
