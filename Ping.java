@@ -29,10 +29,9 @@ public class Ping {
 	
 	public Ping(String address) {
 		this.setAddress(address);
-		this.verifyTheAvailability();
 	}
 	
-	private void verifyTheAvailability() {
+	public void verifyTheAvailability() {
 		this.setTime(System.currentTimeMillis()/1000);
 		try {
 			InetAddress inet = InetAddress.getByName(this.address);

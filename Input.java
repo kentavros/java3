@@ -1,13 +1,15 @@
 package app.task3;
 
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Input {
 	
 	public static ArrayList <HashMap <String, Integer>> getInput() {
-		System.out.println("Welcom! Enter the host address or its name to verify availability. (Example: google.com)");
+		System.out.println("Welcom! Enter the host address or its name to verify availability. (Example: google.com OR 8.8.8.8)");
 		
 		Scanner in = new Scanner(System.in);
 		ArrayList <HashMap <String, Integer>> addresses = new ArrayList<>();
@@ -36,8 +38,14 @@ public class Input {
 	}
 	
 	private static String checkInputAddress(String str) {
-		if (str.equals("")) {
-			System.out.println("Nothing is entered! Changed by default = localhost");
+		//check url format
+		Pattern pattern1 = Pattern.compile("[-a-zA-Z0-9@:%_\\+.~#?&//=]{2,256}\\.[a-z]{2,4}\\b(\\/[-a-zA-Z0-9@:%_\\+.~#?&//=]*)?");
+		Matcher matcher1 = pattern1.matcher(str);
+		//check IP address format
+		Pattern pattern2 = Pattern.compile("\\b(?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9]))\\b");
+		Matcher matcher2 = pattern2.matcher(str);
+		if (!matcher1.matches() && !matcher2.matches()) {
+			System.out.println("Wrong Format or Nothing is entered! Changed by default = localhost");
 			str = "localhost";
 		}
 		return str;

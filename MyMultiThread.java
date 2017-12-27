@@ -27,6 +27,7 @@ public class MyMultiThread {
 							}
 							if(!Thread.interrupted()) {
 								Ping p = new Ping(entry.getKey());
+								p.verifyTheAvailability();
 								System.out.println("Thread#: " + numberT + " TimeStamp: " + p.getTime() + " Status <" + p.getReach()+"> " + "Host: " + p.getAddress() + " ");
 								
 								try {
